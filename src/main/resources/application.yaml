@@ -1,0 +1,21 @@
+logging:
+  #  level.org.springframework.web: DEBUG
+  level.org.springframework.web.servlet.DispatcherServlet: ERROR
+  level.org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: DEBUG
+  level.org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor: DEBUG
+
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+  datasource:
+    url: jdbc:mysql://localhost:3306/community?serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull
+    username: kjwadmin
+    password: vkfksakswkd2@
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        ddl-auto: none
+        format_sql: true
