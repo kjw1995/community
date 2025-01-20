@@ -60,7 +60,7 @@ public class Member {
 	@Column(name = "upated_at")
 	private LocalDateTime upatedAt;
 
-	@OneToMany(mappedBy = "idx")
+	@OneToMany(mappedBy = "id")
 	private List<Role> roles;
 
 }

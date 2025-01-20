@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .signup-container {
+            background-color: white;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .signup-container h1 {
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            color: #333;
+        }
+
+        .signup-container .input-group {
+            margin-bottom: 15px;
+        }
+
+        .signup-container input {
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .signup-container button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .signup-container button:hover {
+            background-color: #45a049;
+        }
+
+        .signup-container a {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #4CAF50;
+            text-decoration: none;
+            display: block;
+        }
+
+        .signup-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="signup-container">
+    <h1>회원가입</h1>
+    <div class="input-group">
+        <input type="text" id="username" placeholder="아이디" required>
+    </div>
+    <div class="input-group">
+        <input type="password" id="password" placeholder="비밀번호" required>
+    </div>
+    <div class="input-group">
+        <input type="password" id="confirm_password" placeholder="비밀번호 확인" required>
+    </div>
+    <div class="input-group">
+        <input type="text" id="nickname" placeholder="닉네임" required>
+    </div>
+    <div class="input-group">
+        <input type="text" id="phone" placeholder="전화번호" required>
+    </div>
+    <div class="input-group">
+        <input type="email" id="email" placeholder="이메일" required>
+    </div>
+    <button onclick="signup()">가입하기</button>
+    <a href="#">이미 회원이시라면?</a>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+    function signup() {
+
+        const signupRequestData = {
+
+            id: $("#username").val(),
+            password: $("#password").val(),
+            nickname: $("#nickname").val(),
+            phoneNumber: $("#phone").val(),
+            email: $("#email").val()
+
+        };
+
+        $.ajax({
+
+            url: '/api/v1/members',
+            method: 'POST',
+            contentType: 'application/json',
+            accept: 'application/json',
+            data: JSON.stringify(signupRequestData),
+            success: function (response) {
+                alert('회원가입 성공');
+            },
+            error: function () {
+                alert('회원가입 실패');
+            }
+
+        });
+
+    }
+
+</script>
+</body>
+</html>

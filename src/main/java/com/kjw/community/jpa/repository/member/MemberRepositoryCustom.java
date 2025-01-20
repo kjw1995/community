@@ -1,4 +1,4 @@
-package com.kjw.community.jpa.repository;
+package com.kjw.community.jpa.repository.member;
 
 import java.util.List;
 

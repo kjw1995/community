@@ -50,8 +50,11 @@ public class SecurityConfig {
 
 		MvcRequestMatcher.Builder mvc = new MvcRequestMatcher.Builder(introspector);
 		MvcRequestMatcher[] whiteList = {
+			mvc.pattern(GlobalURL.VIEW_MAIN),
 			mvc.pattern(GlobalURL.VIEW_LOGIN),
-			mvc.pattern(GlobalURL.VIEW_BOARD)
+			mvc.pattern(GlobalURL.VIEW_SIGN),
+			mvc.pattern(GlobalURL.VIEW_BOARD),
+			mvc.pattern(GlobalURL.MEMBER_URL)
 		};
 
 		http

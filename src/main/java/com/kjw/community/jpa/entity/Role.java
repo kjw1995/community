@@ -12,11 +12,14 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
+@Builder
+@AllArgsConstructor
+@NotNull
 @Getter
-@Setter
 @Entity
 @Table(name = "role")
 public class Role {
@@ -42,7 +45,7 @@ public class Role {
 	private LocalDateTime upatedAt;
 
 	@ManyToOne
-	@JoinColumn(name = "idx", insertable = false, updatable = false)
+	@JoinColumn(name = "id", insertable = false, updatable = false)
 	private Member member;
 
 }

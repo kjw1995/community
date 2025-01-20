@@ -11,9 +11,10 @@ public class GlobalURL {
 	public static final String VIEW_URI = "/views";
 	public static final String VIEW_MAIN = VIEW_URI + "/main";
 	public static final String VIEW_LOGIN = VIEW_URI + "/login";
+	public static final String VIEW_SIGN = VIEW_URI + "/sign";
 	public static final String VIEW_BOARD = VIEW_URI + "/board";
 
 	public static final String LOGIN_URL = API_VERSION + AUTH_URI + MEMBER_URI + "/login";
-
+	public static final String MEMBER_URL = API_VERSION + MEMBER_URI;
 
 }

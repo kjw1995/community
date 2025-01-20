@@ -1,4 +1,4 @@
-package com.kjw.community.jpa.repository;
+package com.kjw.community.jpa.repository.member;
 
 import static com.kjw.community.jpa.entity.QMember.*;
 
@@ -10,11 +10,10 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import jakarta.persistence.EntityManager;
 
-public class MemberRepositoryImpl extends BaseQueryDslRepository implements MemberRepositoryCustom {
+public class MemberRepositoryCustomImpl extends BaseQueryDslRepository implements MemberRepositoryCustom {
 
-	public MemberRepositoryImpl(EntityManager em,
-		JPAQueryFactory queryFactory, Class domainClass) {
-		super(em, queryFactory, domainClass);
+	public MemberRepositoryCustomImpl(EntityManager em, JPAQueryFactory queryFactory) {
+		super(em, queryFactory, Member.class);
 	}
 
 	@Override

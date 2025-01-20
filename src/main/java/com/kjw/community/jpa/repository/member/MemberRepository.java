@@ -1,4 +1,4 @@
-package com.kjw.community.jpa.repository;
+package com.kjw.community.jpa.repository.member;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

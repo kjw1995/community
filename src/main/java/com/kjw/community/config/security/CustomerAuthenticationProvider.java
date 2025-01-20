@@ -19,7 +19,7 @@ public class CustomerAuthenticationProvider implements AuthenticationProvider {
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-
+		
 		return null;
 	}
 
