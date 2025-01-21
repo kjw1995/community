@@ -96,7 +96,8 @@
     <button onclick="signup()">가입하기</button>
     <a href="#">이미 회원이시라면?</a>
 </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-migrate-3.0.1.min.js"></script>
 <script>
 
     function signup() {
@@ -116,16 +117,16 @@
             url: '/api/v1/members',
             method: 'POST',
             contentType: 'application/json',
-            accept: 'application/json',
+            dataType: 'application/json',
             data: JSON.stringify(signupRequestData),
-            success: function (response) {
-                alert('회원가입 성공');
-            },
-            error: function () {
-                alert('회원가입 실패');
-            }
+            success: function () {
 
-        });
+            },
+            error: function (jqXHR) {
+                alert(jqXHR.response.msg);
+            }
+        })
+
 
     }
 

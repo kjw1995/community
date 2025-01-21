@@ -15,9 +15,11 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @NotNull
 @Getter
 @Entity
@@ -45,7 +47,7 @@ public class Role {
 	private LocalDateTime upatedAt;
 
 	@ManyToOne
-	@JoinColumn(name = "id", insertable = false, updatable = false)
+	@JoinColumn(name = "idx", insertable = false, updatable = false)
 	private Member member;
 
 }

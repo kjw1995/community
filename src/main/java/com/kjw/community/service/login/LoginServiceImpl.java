@@ -34,7 +34,7 @@ public class LoginServiceImpl implements LoginService {
 			.orElseThrow(() -> new UsernameNotFoundException("회원정보를 찾을 수 없습니다."));
 
 		List<Role> roles = repository.findByMemberIdx(member.getId())
-			.orElseThrow(() -> new UserRoleNotFoundException("회원 권한 조회 오류"));
+			.orElseThrow(UserRoleNotFoundException::new);
 
 		List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 		for (Role role : roles) {

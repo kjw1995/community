@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -50,11 +51,14 @@ public class SecurityConfig {
 
 		MvcRequestMatcher.Builder mvc = new MvcRequestMatcher.Builder(introspector);
 		MvcRequestMatcher[] whiteList = {
+			mvc.pattern(GlobalURL.VIEW_ERROR),
 			mvc.pattern(GlobalURL.VIEW_MAIN),
 			mvc.pattern(GlobalURL.VIEW_LOGIN),
 			mvc.pattern(GlobalURL.VIEW_SIGN),
 			mvc.pattern(GlobalURL.VIEW_BOARD),
-			mvc.pattern(GlobalURL.MEMBER_URL)
+			mvc.pattern(GlobalURL.MEMBER_URL),
+			mvc.pattern(GlobalURL.LOGIN_URL),
+			mvc.pattern(GlobalURL.LOGOUT_URL)
 		};
 
 		http
@@ -67,7 +71,23 @@ public class SecurityConfig {
 				.passwordParameter("loginPassword")
 				.successHandler(loginSuccessHandler)
 				.failureHandler(loginFailureHandler)
-				.loginProcessingUrl(GlobalURL.LOGIN_URL));
+				.loginProcessingUrl(GlobalURL.LOGIN_URL)
+			)
+			.sessionManagement(sessionManagement -> sessionManagement
+				.sessionFixation().migrateSession()
+				.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+				.sessionConcurrency(concurrencyOptions -> concurrencyOptions
+					.maximumSessions(1)
+					.maxSessionsPreventsLogin(true)
+					.expiredUrl(GlobalURL.VIEW_LOGIN)
+				)
+
+			)
+			.logout(logoutOptions -> logoutOptions
+				.logoutUrl(GlobalURL.LOGOUT_URL)
+				.clearAuthentication(true)
+				.deleteCookies("JSESSIONID")
+			);
 
 		return http.build();
 
