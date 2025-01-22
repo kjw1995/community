@@ -11,8 +11,10 @@ import com.kjw.community.dto.security.CustomUserDetails;
 import com.kjw.community.service.login.LoginService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
+@Slf4j
 public class CustomerAuthenticationProvider implements AuthenticationProvider {
 
 	private final PasswordEncoder bcryptoPasswordEncoder;
@@ -25,8 +27,10 @@ public class CustomerAuthenticationProvider implements AuthenticationProvider {
 		CustomUserDetails userDetails = (CustomUserDetails)loginService.loadUserByUsername(
 			authentication.getPrincipal().toString());
 
-		if (!bcryptoPasswordEncoder.matches(authentication.getCredentials().toString(), userDetails.getPassword())) {
-			throw new UsernameNotFoundException("회원 정보를 찾을 수 없습니다.");
+		log.info("credentials = " + authentication.getCredentials().toString());
+
+		if (!bcryptoPasswordEncoder.matches(userDetails.getPassword(), authentication.getCredentials().toString())) {
+			throw new UsernameNotFoundException("비밀번호를 확인해주세요.");
 		}
 
 		UsernamePasswordAuthenticationToken userAuthenticationToken = UsernamePasswordAuthenticationToken.authenticated(

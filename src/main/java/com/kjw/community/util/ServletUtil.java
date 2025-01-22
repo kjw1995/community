@@ -3,6 +3,7 @@ package com.kjw.community.util;
 import org.springframework.util.Assert;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.thymeleaf.util.ObjectUtils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,16 +20,13 @@ public class ServletUtil {
 
 	public static HttpServletRequest getRequest() {
 		ServletRequestAttributes requestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
-		Assert.notNull(requestAttributes, "Request is null");
-
-		return requestAttributes.getRequest();
+		return ObjectUtils.nullSafe(requestAttributes.getRequest(), null);
 	}
 
 	public static HttpServletResponse getResponse() {
 		ServletRequestAttributes requestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
 		Assert.notNull(requestAttributes, "Request is null");
-
-		return requestAttributes.getResponse();
+		return ObjectUtils.nullSafe(requestAttributes.getResponse(), null);
 	}
 
 	public static HttpSession getSession() {

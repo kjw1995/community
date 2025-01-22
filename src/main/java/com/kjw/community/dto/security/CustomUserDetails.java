@@ -20,16 +20,13 @@ public class CustomUserDetails implements UserDetails {
 
 	private String nickname;
 
+	private String password;
+
 	private String email;
 
 	private String phoneNumber;
 
 	private List<SimpleGrantedAuthority> authorities;
-
-	@Override
-	public String getPassword() {
-		return null;
-	}
 
 	@Override
 	public String getUsername() {

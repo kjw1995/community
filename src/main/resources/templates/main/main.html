@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www/thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -128,17 +128,21 @@
 <body>
 <header>
     <h1>Welcome to Our Community!</h1>
-    <div class="user-menu" id="user-menu">
-        <span>Welcome, Username</span>
-        ▼
-        <div class="dropdown" id="dropdown">
-            <a href="/mypage">My Page</a>
-            <a href="/logout">Logout</a>
+    <th:block th:if="${SESSION_USER != null}">
+        <div class="user-menu" id="user-menu">
+            <span>Welcome, Username</span>
+            ▼
+            <div class="dropdown" id="dropdown">
+                <a href="/mypage">My Page</a>
+                <a href="/logout">Logout</a>
+            </div>
         </div>
-    </div>
+    </th:block>
+
 </header>
 <nav>
-    <a href="/view/main">Home</a>
+    <a href="/views/login">Login</a>
+    <a href="/views/main">Home</a>
     <a href="#about">About</a>
     <a href="#services">Services</a>
     <a href="#contact">Contact</a>

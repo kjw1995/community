@@ -43,6 +43,7 @@ public class LoginServiceImpl implements LoginService {
 
 		return CustomUserDetails.builder()
 			.id(member.getMemberId())
+			.password(member.getPassword())
 			.nickname(member.getNickname())
 			.email(member.getEmail())
 			.phoneNumber(member.getPhonenumber())
