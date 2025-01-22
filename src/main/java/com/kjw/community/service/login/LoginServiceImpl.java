@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kjw.community.common.exception.UserRoleNotFoundException;
+import com.kjw.community.dto.security.CustomUserDetails;
 import com.kjw.community.jpa.entity.Member;
 import com.kjw.community.jpa.entity.Role;
 import com.kjw.community.jpa.repository.member.MemberRepository;
@@ -41,9 +41,11 @@ public class LoginServiceImpl implements LoginService {
 			authorities.add(new SimpleGrantedAuthority(role.getType()));
 		}
 
-		return User.builder()
-			.username(member.getMemberId())
-			.password(member.getPassword())
+		return CustomUserDetails.builder()
+			.id(member.getMemberId())
+			.nickname(member.getNickname())
+			.email(member.getEmail())
+			.phoneNumber(member.getPhonenumber())
 			.authorities(authorities)
 			.build();
 	}

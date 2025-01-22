@@ -4,10 +4,10 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.kjw.community.dto.security.CustomUserDetails;
 import com.kjw.community.service.login.LoginService;
 
 import lombok.RequiredArgsConstructor;
@@ -22,14 +22,19 @@ public class CustomerAuthenticationProvider implements AuthenticationProvider {
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
-		UserDetails userDetails = loginService.loadUserByUsername(authentication.getPrincipal().toString());
+		CustomUserDetails userDetails = (CustomUserDetails)loginService.loadUserByUsername(
+			authentication.getPrincipal().toString());
 
 		if (!bcryptoPasswordEncoder.matches(authentication.getCredentials().toString(), userDetails.getPassword())) {
 			throw new UsernameNotFoundException("회원 정보를 찾을 수 없습니다.");
 		}
 
-		return UsernamePasswordAuthenticationToken.authenticated(userDetails.getUsername(), userDetails.getPassword(),
+		UsernamePasswordAuthenticationToken userAuthenticationToken = UsernamePasswordAuthenticationToken.authenticated(
+			userDetails.getUsername(), null,
 			userDetails.getAuthorities());
+		userAuthenticationToken.setDetails(userDetails);
+
+		return userAuthenticationToken;
 	}
 
 	@Override
