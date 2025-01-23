@@ -1,0 +1,17 @@
+= Community API Document
+
+== 회원가입
+
+=== 요청
+
+include::{snippets}/signUp/curl-request.adoc[]
+include::{snippets}/signUp/httpie-request.adoc[]
+include::{snippets}/signUp/http-request.adoc[]
+include::{snippets}/signUp/request-body.adoc[]
+include::{snippets}/signUp/request-fields.adoc[]
+
+=== 응답
+
+include::{snippets}/signUp/http-response.adoc[]
+include::{snippets}/signUp/response-body.adoc[]
+include::{snippets}/signUp/response-fields.adoc[]

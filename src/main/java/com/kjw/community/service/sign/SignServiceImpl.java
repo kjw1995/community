@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kjw.community.common.exception.MemberAlreadyExistsException;
 import com.kjw.community.common.member.MemberActive;
 import com.kjw.community.common.member.MemberRole;
+import com.kjw.community.common.message.ResponseMessage;
 import com.kjw.community.dto.common.ResponseDto;
 import com.kjw.community.dto.sign.SignUpRequestDto;
 import com.kjw.community.jpa.entity.Member;
@@ -70,7 +71,8 @@ public class SignServiceImpl implements SignService {
 
 		});
 
-		return ResponseEntity.status(HttpStatus.CREATED).body(ResponseDto.ofSuccessWithMsg("회원가입이 완료되었습니다."));
+		return ResponseEntity.status(HttpStatus.CREATED)
+			.body(ResponseDto.ofSuccessWithMsg(ResponseMessage.SIGN_COMPLETE.getValue()));
 
 	}
 
