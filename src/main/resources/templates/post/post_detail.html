@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Detail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+            display: block;
+        }
+
+        nav a:hover {
+            background-color: #575757;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .detail {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .detail h2 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .detail p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .detail .meta {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 20px;
+        }
+
+        .detail .actions {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .detail .actions a {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .detail .actions a:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Post Detail</h1>
+</header>
+<nav>
+    <a href="#">Home</a>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#contact">Contact</a>
+</nav>
+<div class="container">
+    <div class="detail">
+        <h2>Post Title</h2>
+        <div class="meta">
+            <span>Posted by <strong>Author Name</strong> on <em>Date</em></span>
+        </div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante
+            dapibus diam.</p>
+        <div class="actions">
+            <a href="/edit-post">Edit Post</a>
+            <a href="/delete-post">Delete Post</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

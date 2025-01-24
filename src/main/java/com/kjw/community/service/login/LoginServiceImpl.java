@@ -42,6 +42,7 @@ public class LoginServiceImpl implements LoginService {
 		}
 
 		return CustomUserDetails.builder()
+			.memberIdx(member.getId())
 			.id(member.getMemberId())
 			.password(member.getPassword())
 			.nickname(member.getNickname())

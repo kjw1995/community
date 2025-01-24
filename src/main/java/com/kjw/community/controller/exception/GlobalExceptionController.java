@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kjw.community.common.exception.MemberAlreadyExistsException;
+import com.kjw.community.common.exception.ResourceNotFound;
 import com.kjw.community.dto.common.ResponseDto;
 import com.kjw.community.util.ServletUtil;
 
@@ -40,6 +41,15 @@ public class GlobalExceptionController {
 	@ExceptionHandler(MemberAlreadyExistsException.class)
 	public Object handleMemberAlreadyExistsException(MemberAlreadyExistsException e, HttpServletRequest request) {
 		log.error("MemberAlreadyExistsException", e);
+		if (ServletUtil.isAjaxRequest(request)) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseDto.ofErrorWithMsg(e.getMessage()));
+		}
+		return new ModelAndView("/error/error");
+	}
+
+	@ExceptionHandler(ResourceNotFound.class)
+	public Object handleResourceNotFoundException(ResourceNotFound e, HttpServletRequest request) {
+		log.error("ResourceNotFoundException", e);
 		if (ServletUtil.isAjaxRequest(request)) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseDto.ofErrorWithMsg(e.getMessage()));
 		}

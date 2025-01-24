@@ -32,6 +32,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
 		sessionUtil.setUserSession(
 			SessionDto.builder()
+				.memberIdx(userDetails.getMemberIdx())
 				.id(authentication.getPrincipal().toString())
 				.email(userDetails.getEmail())
 				.nickname(userDetails.getNickname())

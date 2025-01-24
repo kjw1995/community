@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Board</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+            display: block;
+        }
+
+        nav a:hover {
+            background-color: #575757;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .board {
+            margin-top: 20px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .board table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .board table th, .board table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .board table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .board table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .board .add-post {
+            display: block;
+            text-align: right;
+            margin-bottom: 10px;
+        }
+
+        .board .add-post a {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .board .add-post a:hover {
+            background-color: #45a049;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination a {
+            margin: 0 5px;
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .pagination a:hover {
+            background-color: #45a049;
+        }
+
+        .pagination .active {
+            background-color: #333;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Community Board</h1>
+</header>
+<nav>
+    <a href="#">Home</a>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#contact">Contact</a>
+</nav>
+<div class="container">
+    <div class="board">
+        <div class="add-post">
+            <a href="/add-post">+ Add New Post</a>
+        </div>
+        <table>
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td><a href="/post/1">Welcome to the Community!</a></td>
+                <td>Admin</td>
+                <td>2025-01-17</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td><a href="/post/2">How to Get Started</a></td>
+                <td>John Doe</td>
+                <td>2025-01-16</td>
+            </tr>
+            <!-- Additional rows for up to 10 posts per page -->
+            </tbody>
+        </table>
+        <div class="pagination">
+            <a href="#" class="active">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#">Next</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

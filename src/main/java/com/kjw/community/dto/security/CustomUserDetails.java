@@ -16,6 +16,8 @@ import lombok.NoArgsConstructor;
 @Getter
 public class CustomUserDetails implements UserDetails {
 
+	private Long memberIdx;
+
 	private String id;
 
 	private String nickname;

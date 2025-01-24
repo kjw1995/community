@@ -1,35 +1,40 @@
 package com.kjw.community.jpa.entity;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@Getter
 @Table(name = "post")
 public class Post {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "idx", nullable = false)
+	@Column(name = "idx")
 	private Long id;
 
 	@Column(name = "member_idx")
 	private Long memberIdx;
 
-	@Size(max = 255)
 	@NotNull
-	@Column(name = "title", nullable = false)
+	@Column(name = "title")
 	private String title;
 
 	@Lob
@@ -37,10 +42,14 @@ public class Post {
 	private String content;
 
 	@NotNull
-	@Column(name = "created_at", nullable = false)
-	private Instant createdAt;
+	@Column(name = "created_at")
+	private LocalDateTime createdAt;
 
 	@Column(name = "upated_at")
-	private Instant upatedAt;
+	private LocalDateTime upatedAt;
+
+	@ManyToOne
+	@JoinColumn(name = "id", insertable = false, updatable = false)
+	private Member member;
 
 }

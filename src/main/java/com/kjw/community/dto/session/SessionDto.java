@@ -15,6 +15,8 @@ import lombok.NoArgsConstructor;
 @Getter
 public class SessionDto {
 
+	private Long memberIdx;
+
 	private String id;
 
 	private String nickname;

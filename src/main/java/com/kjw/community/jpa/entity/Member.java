@@ -63,4 +63,7 @@ public class Member {
 	@OneToMany(mappedBy = "id")
 	private List<Role> roles;
 
+	@OneToMany(mappedBy = "id")
+	private List<Post> posts;
+
 }
