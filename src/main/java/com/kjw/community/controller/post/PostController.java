@@ -29,7 +29,7 @@ public class PostController {
 	public ModelAndView getPostView() {
 		return new ModelAndView("/post/post");
 	}
-
+	
 	@GetMapping(GlobalURL.POST_URI + "/{startNum}")
 	@ResponseBody
 	public ResponseEntity<ResponseDto<List<PostsResponseDto>>> getPosts(@PathVariable("startNum") int startNum) {
