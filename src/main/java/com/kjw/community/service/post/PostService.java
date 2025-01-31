@@ -13,7 +13,7 @@ public interface PostService {
 
 	ResponseEntity<ResponseDto<List<PostsResponseDto>>> getPosts(int startNum);
 
-	ResponseEntity<ResponseDto<Void>> createPost(PostCreateRequestDto requestDto);
+	ResponseEntity<ResponseDto<Void>> createPost(PostCreateRequestDto requestDto) throws Exception;
 
 	ResponseEntity<ResponseDto<PostDetailResponseDto>> getPost(Long postIdx);
 

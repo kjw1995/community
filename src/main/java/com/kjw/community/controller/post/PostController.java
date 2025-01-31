@@ -52,7 +52,7 @@ public class PostController {
 
 	@PostMapping(GlobalURL.POST_URI)
 	@ResponseBody
-	public ResponseEntity<ResponseDto<Void>> createPost(@RequestBody PostCreateRequestDto requestDto) {
+	public ResponseEntity<ResponseDto<Void>> createPost(@RequestBody PostCreateRequestDto requestDto) throws Exception {
 		return postService.createPost(requestDto);
 	}
 

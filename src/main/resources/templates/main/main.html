@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>커뮤니티 메인페이지</title>
+    <title>메인</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -127,23 +127,23 @@
 </head>
 <body>
 <header>
-    <h1>Welcome to Our Community!</h1>
+    <h1>메인</h1>
     <th:block th:if="${SESSION_USER != null}">
         <div class="user-menu" id="user-menu">
-            <span>Welcome, Username</span>
+            <span th:text="${SESSION_USER.id} + 님"></span>
             ▼
             <div class="dropdown" id="dropdown">
                 <a href="/mypage">My Page</a>
-                <a href="/logout">Logout</a>
+                <a href="/api/v1/auth/members/logout">Logout</a>
             </div>
         </div>
     </th:block>
 
 </header>
 <nav>
-    <a href="/views/main">Home</a>
-    <a href="/views/login">Login</a>
-    <a href="/views/posts">Post</a>
+    <a href="/views/main">홈</a>
+    <a href="/views/login">로그인</a>
+    <a href="/views/posts">게시판</a>
 </nav>
 <div class="container">
     <div class="hero">

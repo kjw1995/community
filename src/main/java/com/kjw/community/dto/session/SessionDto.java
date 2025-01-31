@@ -1,8 +1,8 @@
 package com.kjw.community.dto.session;
 
-import java.util.List;
+import java.util.Collection;
 
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.GrantedAuthority;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +25,6 @@ public class SessionDto {
 
 	private String email;
 
-	private List<SimpleGrantedAuthority> roles;
+	private Collection<? extends GrantedAuthority> roles;
 
 }

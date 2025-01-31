@@ -29,12 +29,13 @@ public class CustomerAuthenticationProvider implements AuthenticationProvider {
 
 		log.info("credentials = " + authentication.getCredentials().toString());
 
-		if (!bcryptoPasswordEncoder.matches(userDetails.getPassword(), authentication.getCredentials().toString())) {
+		if (!bcryptoPasswordEncoder.matches(authentication.getCredentials().toString(), userDetails.getPassword())) {
 			throw new UsernameNotFoundException("비밀번호를 확인해주세요.");
 		}
 
 		UsernamePasswordAuthenticationToken userAuthenticationToken = UsernamePasswordAuthenticationToken.authenticated(
-			userDetails.getUsername(), null,
+			userDetails.getId(),
+			null,
 			userDetails.getAuthorities());
 		userAuthenticationToken.setDetails(userDetails);
 

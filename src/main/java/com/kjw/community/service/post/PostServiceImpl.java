@@ -3,7 +3,9 @@ package com.kjw.community.service.post;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import org.apache.coyote.BadRequestException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,7 @@ import com.kjw.community.dto.common.ResponseDto;
 import com.kjw.community.dto.post.PostCreateRequestDto;
 import com.kjw.community.dto.post.PostDetailResponseDto;
 import com.kjw.community.dto.post.PostsResponseDto;
+import com.kjw.community.dto.session.SessionDto;
 import com.kjw.community.jpa.entity.Post;
 import com.kjw.community.jpa.repository.post.PostRepository;
 import com.kjw.community.util.SessionUtil;
@@ -52,16 +55,18 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public ResponseEntity<ResponseDto<Void>> createPost(PostCreateRequestDto requestDto) {
+	public ResponseEntity<ResponseDto<Void>> createPost(PostCreateRequestDto requestDto) throws Exception {
+
+		SessionDto session = Optional.of(sessionUtil.getUserSession())
+			.orElseThrow(() -> new BadRequestException("잘못된 요청입니다."));
 
 		postRepository.save(
 			Post.builder()
-				.memberIdx(sessionUtil.getUserSession().getMemberIdx())
+				.memberIdx(session.getMemberIdx())
 				.title(requestDto.getTitle())
 				.content(requestDto.getContent())
 				.createdAt(LocalDateTime.now())
-				.build())
-		;
+				.build());
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(ResponseDto.ofSuccessWithMsg("포스트 작성 성공"));
 	}

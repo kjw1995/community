@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Community Board</title>
+    <title>게시판</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -114,26 +114,23 @@
 </head>
 <body>
 <header>
-    <h1>Community Board</h1>
+    <h1>게시판</h1>
 </header>
 <nav>
-    <a href="#">Home</a>
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#contact">Contact</a>
+    <a href="/views/main">홈</a>
 </nav>
 <div class="container">
     <div class="board">
         <div class="add-post">
-            <a href="/add-post">+ Add New Post</a>
+            <a href="/views/posts/create">+ Add New Post</a>
         </div>
         <table>
             <thead>
             <tr>
-                <th>#</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Date</th>
+                <th></th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>작성날자</th>
             </tr>
             </thead>
             <tbody>

@@ -28,20 +28,26 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 		Authentication authentication) throws IOException, ServletException {
 
-		CustomUserDetails userDetails = (CustomUserDetails)authentication.getDetails();
+		try {
+			CustomUserDetails userDetails = (CustomUserDetails)authentication.getDetails();
 
-		sessionUtil.setUserSession(
-			SessionDto.builder()
-				.memberIdx(userDetails.getMemberIdx())
-				.id(authentication.getPrincipal().toString())
-				.email(userDetails.getEmail())
-				.nickname(userDetails.getNickname())
-				.phoneNumber(userDetails.getPhoneNumber())
-				.roles(userDetails.getAuthorities())
-				.build()
-		);
+			sessionUtil.setUserSession(
+				SessionDto.builder()
+					.memberIdx(userDetails.getMemberIdx())
+					.id(authentication.getPrincipal().toString())
+					.email(userDetails.getEmail())
+					.nickname(userDetails.getNickname())
+					.phoneNumber(userDetails.getPhoneNumber())
+					.roles(userDetails.getAuthorities())
+					.build()
+			);
 
-		response.sendRedirect(GlobalURL.VIEW_MAIN);
+			response.sendRedirect(GlobalURL.VIEW_MAIN);
+
+		} catch (Exception e) {
+			log.error("onAuthenticationSuccess error", e);
+			response.sendRedirect(GlobalURL.VIEW_ERROR);
+		}
 
 	}
 

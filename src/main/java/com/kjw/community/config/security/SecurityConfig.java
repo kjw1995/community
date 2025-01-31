@@ -69,7 +69,7 @@ public class SecurityConfig {
 				httpRequests.requestMatchers(whiteList)
 					.permitAll()
 					.requestMatchers(GlobalURL.POST_URI + "/**", GlobalURL.VIEW_POST + "/**")
-					.hasRole(MemberRole.NORMAL.getValue())
+					.hasAnyAuthority(MemberRole.NORMAL.getValue())
 			)
 			.formLogin(loginOptions -> loginOptions
 				.loginPage(GlobalURL.VIEW_LOGIN)
@@ -91,6 +91,7 @@ public class SecurityConfig {
 			)
 			.logout(logoutOptions -> logoutOptions
 				.logoutUrl(GlobalURL.LOGOUT_URL)
+				.invalidateHttpSession(true)
 				.clearAuthentication(true)
 				.deleteCookies("JSESSIONID")
 			);
