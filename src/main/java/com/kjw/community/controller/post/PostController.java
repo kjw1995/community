@@ -1,7 +1,7 @@
 package com.kjw.community.controller.post;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,10 +29,10 @@ public class PostController {
 	public ModelAndView getPostView() {
 		return new ModelAndView("/post/post");
 	}
-	
-	@GetMapping(GlobalURL.POST_URI + "/{startNum}")
+
+	@GetMapping(GlobalURL.POST_URL + "/{startNum}")
 	@ResponseBody
-	public ResponseEntity<ResponseDto<List<PostsResponseDto>>> getPosts(@PathVariable("startNum") int startNum) {
+	public ResponseEntity<ResponseDto<Page<PostsResponseDto>> getPosts(@PathVariable("startNum") int startNum) {
 		return postService.getPosts(startNum);
 	}
 

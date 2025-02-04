@@ -1,22 +1,29 @@
 package com.kjw.community.dto.post;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostsResponseDto {
+@Getter
+public class PostsResponseDto implements Serializable {
 
-	private String title;
+	private static final long serialVersionUID = 1L;
 
-	private Long memberIdx;
+	public Long postIdx;
 
-	private String memberId;
+	public String title;
 
-	private LocalDateTime createTime;
+	public Long memberIdx;
+
+	public String memberId;
+
+	public LocalDateTime createTime;
 
 }

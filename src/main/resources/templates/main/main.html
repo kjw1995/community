@@ -108,21 +108,27 @@
             background-color: #f1f1f1;
         }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-3.0.1.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const userMenu = document.getElementById('user-menu');
-            const dropdown = document.getElementById('dropdown');
 
-            userMenu.addEventListener('click', () => {
+        $(document).ready(function () {
+
+            const userMenu = $('#user-menu');
+            const dropdown = $('#dropdown');
+
+            userMenu.on('click', function () {
                 dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
             });
 
-            document.addEventListener('click', (e) => {
-                if (!userMenu.contains(e.target) && !dropdown.contains(e.target)) {
-                    dropdown.style.display = 'none';
-                }
-            });
         });
+
+        $(document).on('click', function (e) {
+            if (!$('#userMenu').has(e.target).length && !$('#dropdown').has(e.target).length) {
+                $('#dropdown').hide();
+            }
+        });
+
     </script>
 </head>
 <body>

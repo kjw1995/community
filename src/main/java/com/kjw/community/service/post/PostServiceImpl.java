@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.coyote.BadRequestException;
-import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,13 +35,14 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public ResponseEntity<ResponseDto<List<PostsResponseDto>>> getPosts(int startNum) {
+	public ResponseEntity<ResponseDto<PageImpl<PostsResponseDto>>> getPosts(int startNum) {
 
-		Page<Post> posts = postRepository.findAll(PageRequest.of(startNum, 10));
+		List<Post> posts = postRepository.findAll();
 		List<PostsResponseDto> responseDtoList = new ArrayList<>();
 
 		for (Post post : posts) {
 			PostsResponseDto responseDto = PostsResponseDto.builder()
+				.postIdx(post.getId())
 				.title(post.getTitle())
 				.memberId(post.getMember().getMemberId())
 				.memberIdx(post.getMemberIdx())
@@ -50,7 +51,10 @@ public class PostServiceImpl implements PostService {
 			responseDtoList.add(responseDto);
 		}
 
-		return ResponseEntity.ok(ResponseDto.ofSuccess(responseDtoList, "조회 성공"));
+		PageImpl<PostsResponseDto> response = new PageImpl<>(responseDtoList, PageRequest.of(startNum, 10),
+			responseDtoList.size());
+
+		return ResponseEntity.ok(ResponseDto.ofSuccess(response, "조회 성공"));
 	}
 
 	@Override

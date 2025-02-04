@@ -1,6 +1,10 @@
 package com.kjw.community.dto.common;
 
-public record ResponseDto<T>(ResponseStatus status, T data, String msg) {
+import java.io.Serializable;
+
+public record ResponseDto<T>(ResponseStatus status, T data, String msg) implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	public enum ResponseStatus {
 		SUCCESS, FAIL, ERROR

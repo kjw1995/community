@@ -18,8 +18,12 @@ public class GlobalURL {
 	public static final String VIEW_POST_CREATE = VIEW_POST + "/create";
 	public static final String VIEW_ERROR = VIEW_URI + ERROR_URI;
 
+	/* Member */
 	public static final String LOGIN_URL = API_VERSION + AUTH_URI + MEMBER_URI + "/login";
 	public static final String LOGOUT_URL = API_VERSION + AUTH_URI + MEMBER_URI + "/logout";
 	public static final String MEMBER_URL = API_VERSION + MEMBER_URI;
+
+	/* Post */
+	public static final String POST_URL = API_VERSION + POST_URI;
 
 }

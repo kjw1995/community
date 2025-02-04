@@ -49,7 +49,7 @@ public class Post {
 	private LocalDateTime upatedAt;
 
 	@ManyToOne
-	@JoinColumn(name = "id", insertable = false, updatable = false)
+	@JoinColumn(name = "member_idx", insertable = false, updatable = false)
 	private Member member;
 
 }

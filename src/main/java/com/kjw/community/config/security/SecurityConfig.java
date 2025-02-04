@@ -19,7 +19,6 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 import com.kjw.community.common.handler.login.LoginFailureHandler;
 import com.kjw.community.common.handler.login.LoginSuccessHandler;
-import com.kjw.community.common.member.MemberRole;
 import com.kjw.community.global.GlobalURL;
 import com.kjw.community.service.login.LoginService;
 
@@ -59,17 +58,18 @@ public class SecurityConfig {
 			mvc.pattern(GlobalURL.VIEW_POST),
 			mvc.pattern(GlobalURL.MEMBER_URL),
 			mvc.pattern(GlobalURL.LOGIN_URL),
-			mvc.pattern(GlobalURL.LOGOUT_URL)
+			mvc.pattern(GlobalURL.LOGOUT_URL),
+			mvc.pattern(GlobalURL.POST_URL + "/**")
 		};
 
 		http
 			.csrf(AbstractHttpConfigurer::disable)
 			.cors(AbstractHttpConfigurer::disable)
 			.authorizeHttpRequests(httpRequests ->
-				httpRequests.requestMatchers(whiteList)
-					.permitAll()
-					.requestMatchers(GlobalURL.POST_URI + "/**", GlobalURL.VIEW_POST + "/**")
-					.hasAnyAuthority(MemberRole.NORMAL.getValue())
+					httpRequests.requestMatchers(whiteList)
+						.permitAll()
+				// .requestMatchers(GlobalURL.POST_URI + "/**", GlobalURL.VIEW_POST + "/**")
+				// .hasAnyAuthority(MemberRole.NORMAL.getValue())
 			)
 			.formLogin(loginOptions -> loginOptions
 				.loginPage(GlobalURL.VIEW_LOGIN)
