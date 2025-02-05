@@ -2,25 +2,18 @@ package com.kjw.community.dto.common;
 
 import java.io.Serializable;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.kjw.community.common.status.response.ResponseStatus;
 
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-public class PageResponseDto<T> implements Serializable {
+public record PageResponseDto<T>(ResponseStatus status, T data, int totalSize, String msg) implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public int totalSize;
+	public static <T> PageResponseDto<T> ofSuccess(T data, int totalSize, String msg) {
+		return new PageResponseDto<T>(ResponseStatus.SUCCESS, data, totalSize, msg);
+	}
 
-	public int startNum;
-
-	public int endNum;
-
-	public T content;
+	public static <T> PageResponseDto<T> ofError(T data, int totalSize, String msg) {
+		return new PageResponseDto<T>(ResponseStatus.ERROR, data, totalSize, msg);
+	}
 
 }

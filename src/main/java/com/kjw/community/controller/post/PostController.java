@@ -1,7 +1,7 @@
 package com.kjw.community.controller.post;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kjw.community.dto.common.PageResponseDto;
 import com.kjw.community.dto.common.ResponseDto;
 import com.kjw.community.dto.post.PostCreateRequestDto;
 import com.kjw.community.dto.post.PostsResponseDto;
@@ -32,7 +33,8 @@ public class PostController {
 
 	@GetMapping(GlobalURL.POST_URL + "/{startNum}")
 	@ResponseBody
-	public ResponseEntity<ResponseDto<Page<PostsResponseDto>> getPosts(@PathVariable("startNum") int startNum) {
+	public ResponseEntity<PageResponseDto<List<PostsResponseDto>>> getPosts(
+		@PathVariable("startNum") int startNum) {
 		return postService.getPosts(startNum);
 	}
 
@@ -50,7 +52,7 @@ public class PostController {
 		return mav;
 	}
 
-	@PostMapping(GlobalURL.POST_URI)
+	@PostMapping(GlobalURL.POST_URL)
 	@ResponseBody
 	public ResponseEntity<ResponseDto<Void>> createPost(@RequestBody PostCreateRequestDto requestDto) throws Exception {
 		return postService.createPost(requestDto);

@@ -6,14 +6,16 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.coyote.BadRequestException;
-import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kjw.community.common.exception.ResourceNotFound;
+import com.kjw.community.dto.common.PageResponseDto;
 import com.kjw.community.dto.common.ResponseDto;
 import com.kjw.community.dto.post.PostCreateRequestDto;
 import com.kjw.community.dto.post.PostDetailResponseDto;
@@ -35,9 +37,10 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public ResponseEntity<ResponseDto<PageImpl<PostsResponseDto>>> getPosts(int startNum) {
+	public ResponseEntity<PageResponseDto<List<PostsResponseDto>>> getPosts(int startNum) {
 
-		List<Post> posts = postRepository.findAll();
+		Page<Post> posts = postRepository.findAll(PageRequest.of(0, startNum, Sort.by(Sort.Order.desc("createdAt"))));
+		long totalSize = postRepository.count();
 		List<PostsResponseDto> responseDtoList = new ArrayList<>();
 
 		for (Post post : posts) {
@@ -51,10 +54,7 @@ public class PostServiceImpl implements PostService {
 			responseDtoList.add(responseDto);
 		}
 
-		PageImpl<PostsResponseDto> response = new PageImpl<>(responseDtoList, PageRequest.of(startNum, 10),
-			responseDtoList.size());
-
-		return ResponseEntity.ok(ResponseDto.ofSuccess(response, "조회 성공"));
+		return ResponseEntity.ok(PageResponseDto.ofSuccess(responseDtoList, (int)totalSize, "조회성공"));
 	}
 
 	@Override

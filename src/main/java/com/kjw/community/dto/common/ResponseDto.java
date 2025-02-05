@@ -2,13 +2,11 @@ package com.kjw.community.dto.common;
 
 import java.io.Serializable;
 
+import com.kjw.community.common.status.response.ResponseStatus;
+
 public record ResponseDto<T>(ResponseStatus status, T data, String msg) implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
-	public enum ResponseStatus {
-		SUCCESS, FAIL, ERROR
-	}
 
 	public static <T> ResponseDto<T> ofSuccess(T data, String msg) {
 		return new ResponseDto<T>(ResponseStatus.SUCCESS, data, msg);

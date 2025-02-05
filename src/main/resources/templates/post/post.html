@@ -160,17 +160,17 @@
                 success: function (response) {
                     console.dir(response);
                     var html = "";
-                    for (var i = 0; i < response.data.numberOfElements; i++) {
-                        html += "<tr data-id='" + response.data.content[i].postIdx + "'>";
+                    for (var i = 0; i < response.data.length; i++) {
+                        html += "<tr data-id='" + response.data[i].postIdx + "'>";
                         html += "<td>" + (i + 1) + "</td>";
-                        html += "<td>" + response.data.content[i].title + "</td>";
-                        html += "<td>" + response.data.content[i].memberId + "</td>";
-                        html += "<td>" + response.data.content[i].createTime + "</td>";
+                        html += "<td>" + response.data[i].title + "</td>";
+                        html += "<td>" + response.data[i].memberId + "</td>";
+                        html += "<td>" + response.data[i].createTime + "</td>";
                         html += "</tr>";
                     }
                     $("#posts-body").html(html);
 
-                    if (response.data.totalElements > defaultSelectPageNumber) {
+                    if (response.data.totalSize > defaultSelectPageNumber) {
 
                         var paginationContainerHtml = "";
 
