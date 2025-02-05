@@ -50,6 +50,26 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
+        .board .add-post {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 15px;
+        }
+
+        .board .add-post a {
+            padding: 12px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .board .add-post a:hover {
+            background-color: #45a049;
+        }
+
         .board table {
             width: 100%;
             border-collapse: collapse;
@@ -71,24 +91,6 @@
             background-color: #f1f1f1;
         }
 
-        .board .add-post {
-            display: block;
-            text-align: right;
-            margin-bottom: 10px;
-        }
-
-        .board .add-post a {
-            padding: 10px 15px;
-            background-color: #4CAF50;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-
-        .board .add-post a:hover {
-            background-color: #45a049;
-        }
-
         .pagination-container {
             display: flex;
             justify-content: space-between;
@@ -96,26 +98,29 @@
             margin-top: 20px;
         }
 
-        .pagination select {
-            padding: 5px;
-            border-radius: 5px;
-        }
-
-        .pagination a {
+        .pagination div {
             margin: 0 5px;
             padding: 10px 15px;
             background-color: #4CAF50;
             color: white;
-            text-decoration: none;
             border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
         }
 
-        .pagination a:hover {
+        .pagination div:hover {
             background-color: #45a049;
         }
 
         .pagination .active {
             background-color: #333;
+        }
+
+        .pagination-container select {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -129,12 +134,12 @@
 <div class="container">
     <div class="board">
         <div class="add-post">
-            <a href="/views/posts/create">+ Add New Post</a>
+            <a href="/views/posts/create">게시글 작성하기</a>
         </div>
         <table>
             <thead>
             <tr>
-                <th></th>
+                <th>#</th>
                 <th>제목</th>
                 <th>작성자</th>
                 <th>작성날자</th>
@@ -143,58 +148,38 @@
             <tbody id="posts-body"></tbody>
         </table>
         <div class="pagination-container">
+            <select id="page-select">
+                <option value="10" selected>10</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+            <div class="pagination"></div>
         </div>
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script>
     $(document).ready(function () {
-
-        var defaultSelectPageNumber = 10;
+        let pageSelect = 10;
 
         function loadPosts(page) {
             $.ajax({
-                url: '/api/v1/posts/' + page,
+                url: '/api/v1/posts?startNum=' + 0 + '&endNum=' + 10,
                 method: 'GET',
                 accept: 'json',
                 success: function (response) {
-                    console.dir(response);
-                    var html = "";
-                    for (var i = 0; i < response.data.length; i++) {
-                        html += "<tr data-id='" + response.data[i].postIdx + "'>";
-                        html += "<td>" + (i + 1) + "</td>";
-                        html += "<td>" + response.data[i].title + "</td>";
-                        html += "<td>" + response.data[i].memberId + "</td>";
-                        html += "<td>" + response.data[i].createTime + "</td>";
+                    let html = "";
+                    response.data.forEach((post, index) => {
+                        html += `<tr data-id='${post.postIdx}'>`;
+                        html += `<td>${index + 1}</td>`;
+                        html += `<td>${post.title}</td>`;
+                        html += `<td>${post.memberId}</td>`;
+                        html += `<td>${post.createTime}</td>`;
                         html += "</tr>";
-                    }
+                    });
                     $("#posts-body").html(html);
-
-                    if (response.data.totalSize > defaultSelectPageNumber) {
-
-                        var paginationContainerHtml = "";
-
-                        paginationContainerHtml += "<select id='page-select'>";
-                        paginationContainerHtml += "<option value='10' selected>10</option>";
-                        paginationContainerHtml += "<option value='30'>30</option>";
-                        paginationContainerHtml += "<option value='50'>50</option>";
-                        paginationContainerHtml += "<option value='100'>100</option>";
-                        paginationContainerHtml += "</select>";
-
-                        paginationContainerHtml += "<div class='pagination'>";
-                        for (var j = 0; j < Math.ceil(response.data.totalElements / defaultSelectPageNumber); j++) {
-                            if (j === 0) {
-                                paginationContainerHtml += "<a href='#' class='active'>" + j + "</a>";
-                            }
-                            paginationContainerHtml += "<a href='#'>" + j + "</a>";
-                        }
-                        paginationContainerHtml += "<a href='#'>Next</a>";
-                        paginationContainerHtml += "</div>";
-
-                        $(".pagination-container").html(paginationContainerHtml);
-
-                    }
-
+                    generatePagination(response.totalSize);
                 },
                 error: function () {
                     console.error("Error loading posts");
@@ -202,15 +187,32 @@
             });
         }
 
-        loadPosts(defaultSelectPageNumber);
+        // TODO 페이지 네이션 보강
+        function generatePagination(totalPages) {
+            let paginationHtml = "";
+            let pageSize = totalPages / 10;
+            for (let j = 0; j < Math.ceil(pageSize); j++) {
+                paginationHtml += `<div class='page-btn page-${j} ${j === 0 ? "active" : ""}' data-page='${j}'>${j + 1}</div>`;
+            }
+            $(".pagination").html(paginationHtml);
+        }
 
-        $("#page-select").change(function () {
-            var selectedPage = $(this).val();
+        loadPosts(0);
+
+        $(document).on("click", ".pagination .page-btn", function () {
+            $(".pagination .page-btn").removeClass("active");
+            $(this).addClass("active");
+            let selectedPage = $(this).data("page");
             loadPosts(selectedPage);
         });
 
+        $("#page-select").change(function () {
+            pageSelect = $(this).val();
+            loadPosts(0);
+        });
+
         $(document).on("click", "#posts-body tr", function () {
-            var postId = $(this).data("id");
+            let postId = $(this).data("id");
             if (postId) {
                 window.location.href = "/views/posts/detail/" + postId;
             }
@@ -219,4 +221,3 @@
 </script>
 </body>
 </html>
-

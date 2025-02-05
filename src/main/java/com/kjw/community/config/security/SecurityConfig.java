@@ -112,7 +112,7 @@ public class SecurityConfig {
 			mvc.pattern(GlobalURL.MEMBER_URL),
 			mvc.pattern(GlobalURL.LOGIN_URL),
 			mvc.pattern(GlobalURL.LOGOUT_URL),
-			mvc.pattern(HttpMethod.GET, GlobalURL.POST_URL + "/**")
+			mvc.pattern(HttpMethod.GET, GlobalURL.POST_URL)
 		};
 	}
 

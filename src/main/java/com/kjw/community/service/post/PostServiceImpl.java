@@ -37,9 +37,10 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public ResponseEntity<PageResponseDto<List<PostsResponseDto>>> getPosts(int startNum) {
+	public ResponseEntity<PageResponseDto<List<PostsResponseDto>>> getPosts(int startNum, int endNum) {
 
-		Page<Post> posts = postRepository.findAll(PageRequest.of(0, startNum, Sort.by(Sort.Order.desc("createdAt"))));
+		Page<Post> posts = postRepository.findAll(
+			PageRequest.of(startNum, endNum, Sort.by(Sort.Order.desc("createdAt"))));
 		long totalSize = postRepository.count();
 		List<PostsResponseDto> responseDtoList = new ArrayList<>();
 

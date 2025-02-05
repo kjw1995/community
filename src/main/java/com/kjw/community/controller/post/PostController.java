@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,11 +32,11 @@ public class PostController {
 		return new ModelAndView("/post/post");
 	}
 
-	@GetMapping(GlobalURL.POST_URL + "/{startNum}")
+	@GetMapping(GlobalURL.POST_URL)
 	@ResponseBody
-	public ResponseEntity<PageResponseDto<List<PostsResponseDto>>> getPosts(
-		@PathVariable("startNum") int startNum) {
-		return postService.getPosts(startNum);
+	public ResponseEntity<PageResponseDto<List<PostsResponseDto>>> getPosts(@RequestParam("startNum") int startNum,
+		@RequestParam("endNum") int endNum) {
+		return postService.getPosts(startNum, endNum);
 	}
 
 	@GetMapping(GlobalURL.VIEW_POST_CREATE)
