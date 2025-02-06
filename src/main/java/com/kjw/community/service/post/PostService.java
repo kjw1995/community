@@ -12,7 +12,7 @@ import com.kjw.community.dto.post.PostsResponseDto;
 
 public interface PostService {
 
-	ResponseEntity<PageResponseDto<List<PostsResponseDto>>> getPosts(int startNum, int endNum);
+	ResponseEntity<PageResponseDto<List<PostsResponseDto>>> getPosts(int pageNum, int pageSize);
 
 	ResponseEntity<ResponseDto<Void>> createPost(PostCreateRequestDto requestDto) throws Exception;
 

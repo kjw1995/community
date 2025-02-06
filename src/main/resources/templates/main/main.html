@@ -1,116 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www/thymeleaf.org">
+<html xmlns:th="http://www/thymeleaf.org" th:replace="layer/head :: head('메인')">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>메인</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
-        }
 
-        header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            text-align: center;
-            position: relative;
-        }
-
-        nav {
-            display: flex;
-            justify-content: center;
-            background-color: #333;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            padding: 14px 20px;
-            display: block;
-        }
-
-        nav a:hover {
-            background-color: #575757;
-        }
-
-        .container {
-            padding: 20px;
-            max-width: 1200px;
-            margin: auto;
-        }
-
-        .hero {
-            text-align: center;
-            padding: 50px 20px;
-            background-color: #e2e2e2;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-
-        .hero h1 {
-            margin: 0;
-            font-size: 2.5rem;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            color: #555;
-        }
-
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px 20px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-
-        .user-menu {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            color: white;
-            cursor: pointer;
-        }
-
-        .user-menu span {
-            font-size: 1rem;
-            margin-right: 10px;
-        }
-
-        .dropdown {
-            display: none;
-            position: absolute;
-            top: 40px;
-            right: 20px;
-            background-color: white;
-            color: black;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-            overflow: hidden;
-            z-index: 1000;
-        }
-
-        .dropdown a {
-            display: block;
-            padding: 10px 15px;
-            color: black;
-            text-decoration: none;
-        }
-
-        .dropdown a:hover {
-            background-color: #f1f1f1;
-        }
-    </style>
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-    <script src="https://code.jquery.com/jquery-migrate-3.0.1.min.js"></script>
-    <script>
+    <script th:fragment="script">
 
         $(document).ready(function () {
 
@@ -132,33 +27,49 @@
     </script>
 </head>
 <body>
-<header>
-    <h1>메인</h1>
-    <th:block th:if="${SESSION_USER != null}">
-        <div class="user-menu" id="user-menu">
-            <span th:text="${SESSION_USER.id} + 님"></span>
-            ▼
-            <div class="dropdown" id="dropdown">
-                <a href="/mypage">My Page</a>
-                <a href="/api/v1/auth/members/logout">Logout</a>
-            </div>
-        </div>
-    </th:block>
+<!-- header -->
+<th:block th:fragment="header">
 
-</header>
-<nav>
-    <a href="/views/main">홈</a>
-    <a href="/views/login">로그인</a>
-    <a href="/views/posts">게시판</a>
-</nav>
-<div class="container">
-    <div class="hero">
-        <h1>Join Our Community</h1>
-        <p>Connect, share, and grow with like-minded individuals.</p>
+    <header>
+        <h1>메인</h1>
+        <th:block th:if="${SESSION_USER != null}">
+            <div class="user-menu" id="user-menu">
+                <span th:text="${SESSION_USER.id} + 님"></span>
+                ▼
+                <div class="dropdown" id="dropdown">
+                    <a href="/mypage">My Page</a>
+                    <a href="/api/v1/auth/members/logout">Logout</a>
+                </div>
+            </div>
+        </th:block>
+
+    </header>
+
+</th:block>
+
+<th:block th:fragment="nav">
+    <nav th:replace="layer/nav :: nav"></nav>
+</th:block>
+
+<th:block th:fragment="container">
+
+    <div class="container">
+        <div class="hero">
+            <h1>Join Our Community</h1>
+            <p>Connect, share, and grow with like-minded individuals.</p>
+        </div>
     </div>
-</div>
-<footer>
-    &copy; 2025 Community Name. All rights reserved.
-</footer>
+
+</th:block>
+
+<th:block th:fragment="footer">
+
+    <footer>
+        &copy; 2025 Community Name. All rights reserved.
+    </footer>
+
+</th:block>
+
+
 </body>
 </html>

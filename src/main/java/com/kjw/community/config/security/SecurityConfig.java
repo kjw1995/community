@@ -112,14 +112,14 @@ public class SecurityConfig {
 			mvc.pattern(GlobalURL.MEMBER_URL),
 			mvc.pattern(GlobalURL.LOGIN_URL),
 			mvc.pattern(GlobalURL.LOGOUT_URL),
-			mvc.pattern(HttpMethod.GET, GlobalURL.POST_URL)
+			mvc.pattern(HttpMethod.GET, GlobalURL.POST_URL),
+			mvc.pattern(HttpMethod.GET, GlobalURL.VIEW_POST_DETAIL + "/**")
 		};
 	}
 
 	private MvcRequestMatcher[] buildAuthenticatedRequests(MvcRequestMatcher.Builder mvc) {
 		return new MvcRequestMatcher[] {
 			mvc.pattern(GlobalURL.VIEW_POST_CREATE),
-			mvc.pattern(GlobalURL.VIEW_POST_DETAIL + "/**"),
 			mvc.pattern(HttpMethod.POST, GlobalURL.POST_URL + "/**")
 		};
 	}

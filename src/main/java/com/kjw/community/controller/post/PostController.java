@@ -34,9 +34,9 @@ public class PostController {
 
 	@GetMapping(GlobalURL.POST_URL)
 	@ResponseBody
-	public ResponseEntity<PageResponseDto<List<PostsResponseDto>>> getPosts(@RequestParam("startNum") int startNum,
-		@RequestParam("endNum") int endNum) {
-		return postService.getPosts(startNum, endNum);
+	public ResponseEntity<PageResponseDto<List<PostsResponseDto>>> getPosts(@RequestParam("pageNumber") int pageNum,
+		@RequestParam("pageSize") int pageSize) {
+		return postService.getPosts(pageNum, pageSize);
 	}
 
 	@GetMapping(GlobalURL.VIEW_POST_CREATE)

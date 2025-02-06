@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -161,11 +161,10 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script>
     $(document).ready(function () {
-        let pageSelect = 10;
 
-        function loadPosts(page) {
+        function loadPosts(pageNum) {
             $.ajax({
-                url: '/api/v1/posts?startNum=' + 0 + '&endNum=' + 10,
+                url: '/api/v1/posts?pageNumber=' + pageNum + '&pageSize=' + $("#page-select").val(),
                 method: 'GET',
                 accept: 'json',
                 success: function (response) {
@@ -175,24 +174,23 @@
                         html += `<td>${index + 1}</td>`;
                         html += `<td>${post.title}</td>`;
                         html += `<td>${post.memberId}</td>`;
-                        html += `<td>${post.createTime}</td>`;
+                        html += `<td>${new Date(post.createTime).toLocaleString()}</td>`;
                         html += "</tr>";
                     });
                     $("#posts-body").html(html);
                     generatePagination(response.totalSize);
                 },
                 error: function () {
-                    console.error("Error loading posts");
+                    alert("에러 발생");
                 }
             });
         }
 
-        // TODO 페이지 네이션 보강
         function generatePagination(totalPages) {
             let paginationHtml = "";
-            let pageSize = totalPages / 10;
+            let pageSize = totalPages / $("#page-select").val();
             for (let j = 0; j < Math.ceil(pageSize); j++) {
-                paginationHtml += `<div class='page-btn page-${j} ${j === 0 ? "active" : ""}' data-page='${j}'>${j + 1}</div>`;
+                paginationHtml += `<div class='page-btn page-${j + 1} ${j === 0 ? "active" : ""}' data-page='${j}'>${j + 1}</div>`;
             }
             $(".pagination").html(paginationHtml);
         }
