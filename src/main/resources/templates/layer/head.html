@@ -6,9 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title th:text="|${title}|"></title>
         <link th:href="@{/css/layer/nav.css}" rel="stylesheet" type="text/css">
-        <link th:href="@{/css/layer/main.css}" rel="stylesheet" type="text/css">
         <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
         <script src="https://code.jquery.com/jquery-migrate-3.0.1.min.js"></script>
+        <th:block th:replace=":: css"></th:block>
+
     </th:block>
 
 <body>
@@ -21,7 +22,8 @@
 
     <th:block th:replace=":: footer"></th:block>
 
-</body>
+    <th:block th:replace=":: scripts"></th:block>
 
+</body>
 </head>
 </html>

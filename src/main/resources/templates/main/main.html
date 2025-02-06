@@ -1,31 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www/thymeleaf.org" th:replace="layer/head :: head('메인')">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>메인</title>
-
-    <script th:fragment="script">
-
-        $(document).ready(function () {
-
-            const userMenu = $('#user-menu');
-            const dropdown = $('#dropdown');
-
-            userMenu.on('click', function () {
-                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-            });
-
-        });
-
-        $(document).on('click', function (e) {
-            if (!$('#userMenu').has(e.target).length && !$('#dropdown').has(e.target).length) {
-                $('#dropdown').hide();
-            }
-        });
-
-    </script>
-</head>
 <body>
 <!-- header -->
 <th:block th:fragment="header">
@@ -68,6 +42,32 @@
         &copy; 2025 Community Name. All rights reserved.
     </footer>
 
+</th:block>
+
+<th:block th:fragment="css">
+    <link th:href="@{/css/layer/main.css}" rel="stylesheet" type="text/css">
+</th:block>
+<th:block th:fragment="scripts">
+    <script th:inline="javascript">
+
+        $(document).ready(function () {
+
+            const userMenu = $('#user-menu');
+            const dropdown = $('#dropdown');
+
+            userMenu.on('click', function () {
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            });
+
+        });
+
+        $(document).on('click', function (e) {
+            if (!$('#userMenu').has(e.target).length && !$('#dropdown').has(e.target).length) {
+                $('#dropdown').hide();
+            }
+        });
+
+    </script>
 </th:block>
 
 

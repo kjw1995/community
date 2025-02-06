@@ -1,221 +1,114 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>게시판</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
-        }
-
-        header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            text-align: center;
-        }
-
-        nav {
-            display: flex;
-            justify-content: center;
-            background-color: #333;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            padding: 14px 20px;
-            display: block;
-        }
-
-        nav a:hover {
-            background-color: #575757;
-        }
-
-        .container {
-            padding: 20px;
-            max-width: 1200px;
-            margin: auto;
-        }
-
-        .board {
-            margin-top: 20px;
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .board .add-post {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 15px;
-        }
-
-        .board .add-post a {
-            padding: 12px 20px;
-            background-color: #4CAF50;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
-        }
-
-        .board .add-post a:hover {
-            background-color: #45a049;
-        }
-
-        .board table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .board table th, .board table td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-            cursor: pointer;
-        }
-
-        .board table th {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        .board table tr:hover {
-            background-color: #f1f1f1;
-        }
-
-        .pagination-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-        .pagination div {
-            margin: 0 5px;
-            padding: 10px 15px;
-            background-color: #4CAF50;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-            display: inline-block;
-        }
-
-        .pagination div:hover {
-            background-color: #45a049;
-        }
-
-        .pagination .active {
-            background-color: #333;
-        }
-
-        .pagination-container select {
-            padding: 8px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            font-size: 14px;
-        }
-    </style>
-</head>
+<html xmlns:th="http://www/thymeleaf.org" th:replace="layer/head :: head('메인')">
 <body>
-<header>
-    <h1>게시판</h1>
-</header>
-<nav>
-    <a href="/views/main">홈</a>
-</nav>
-<div class="container">
-    <div class="board">
-        <div class="add-post">
-            <a href="/views/posts/create">게시글 작성하기</a>
-        </div>
-        <table>
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>제목</th>
-                <th>작성자</th>
-                <th>작성날자</th>
-            </tr>
-            </thead>
-            <tbody id="posts-body"></tbody>
-        </table>
-        <div class="pagination-container">
-            <select id="page-select">
-                <option value="10" selected>10</option>
-                <option value="30">30</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-            </select>
-            <div class="pagination"></div>
+<th:block th:fragment="header">
+    <header>
+        <h1>게시판</h1>
+    </header>
+</th:block>
+<th:block th:fragment="nav">
+    <nav th:replace="layer/nav :: nav"></nav>
+</th:block>
+<th:block th:fragment="container">
+    <div class="container">
+        <div class="board">
+            <div class="add-post">
+                <a href="/views/posts/create">게시글 작성하기</a>
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>작성날자</th>
+                </tr>
+                </thead>
+                <tbody id="posts-body"></tbody>
+            </table>
+            <div class="pagination-container">
+                <select id="page-select">
+                    <option value="10" selected>10</option>
+                    <option value="30">30</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+                <div class="pagination"></div>
+            </div>
         </div>
     </div>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<script>
-    $(document).ready(function () {
+</th:block>
 
-        function loadPosts(pageNum) {
-            $.ajax({
-                url: '/api/v1/posts?pageNumber=' + pageNum + '&pageSize=' + $("#page-select").val(),
-                method: 'GET',
-                accept: 'json',
-                success: function (response) {
-                    let html = "";
-                    response.data.forEach((post, index) => {
-                        html += `<tr data-id='${post.postIdx}'>`;
-                        html += `<td>${index + 1}</td>`;
-                        html += `<td>${post.title}</td>`;
-                        html += `<td>${post.memberId}</td>`;
-                        html += `<td>${new Date(post.createTime).toLocaleString()}</td>`;
-                        html += "</tr>";
-                    });
-                    $("#posts-body").html(html);
-                    generatePagination(response.totalSize);
-                },
-                error: function () {
-                    alert("에러 발생");
+<th:block th:fragment="footer">
+    <footer>
+        &copy; 2025 Community Name. All rights reserved.
+    </footer>
+</th:block>
+
+<th:block th:fragment="css">
+    <link th:href="@{/css/layer/post.css}" rel="stylesheet" type="text/css">
+</th:block>
+
+<th:block th:fragment="scripts">
+    <script th:inline="javascript">
+        $(document).ready(function () {
+
+            function loadPosts(pageNum) {
+                $.ajax({
+                    url: '/api/v1/posts?pageNumber=' + pageNum + '&pageSize=' + $("#page-select").val(),
+                    method: 'GET',
+                    accept: 'json',
+                    success: function (response) {
+                        let html = "";
+                        response.data.forEach((post, index) => {
+                            html += `<tr data-id='${post.postIdx}'>`;
+                            html += `<td>${index + 1}</td>`;
+                            html += `<td>${post.title}</td>`;
+                            html += `<td>${post.memberId}</td>`;
+                            html += `<td>${new Date(post.createTime).toLocaleString()}</td>`;
+                            html += "</tr>";
+                        });
+                        $("#posts-body").html(html);
+                        generatePagination(response.totalSize);
+                    },
+                    error: function () {
+                        alert("에러 발생");
+                    }
+                });
+            }
+
+            function generatePagination(totalPages) {
+                let paginationHtml = "";
+                let pageSize = totalPages / $("#page-select").val();
+                for (let j = 0; j < Math.ceil(pageSize); j++) {
+                    paginationHtml += `<div class='page-btn page-${j + 1} ${j === 0 ? "active" : ""}' data-page='${j}'>${j + 1}</div>`;
+                }
+                $(".pagination").html(paginationHtml);
+            }
+
+            loadPosts(0);
+
+            $(document).on("click", ".pagination .page-btn", function () {
+                $(".pagination .page-btn").removeClass("active");
+                $(this).addClass("active");
+                let selectedPage = $(this).data("page");
+                loadPosts(selectedPage);
+            });
+
+            $("#page-select").change(function () {
+                pageSelect = $(this).val();
+                loadPosts(0);
+            });
+
+            $(document).on("click", "#posts-body tr", function () {
+                let postId = $(this).data("id");
+                if (postId) {
+                    window.location.href = "/views/posts/detail/" + postId;
                 }
             });
-        }
-
-        function generatePagination(totalPages) {
-            let paginationHtml = "";
-            let pageSize = totalPages / $("#page-select").val();
-            for (let j = 0; j < Math.ceil(pageSize); j++) {
-                paginationHtml += `<div class='page-btn page-${j + 1} ${j === 0 ? "active" : ""}' data-page='${j}'>${j + 1}</div>`;
-            }
-            $(".pagination").html(paginationHtml);
-        }
-
-        loadPosts(0);
-
-        $(document).on("click", ".pagination .page-btn", function () {
-            $(".pagination .page-btn").removeClass("active");
-            $(this).addClass("active");
-            let selectedPage = $(this).data("page");
-            loadPosts(selectedPage);
         });
+    </script>
+</th:block>
 
-        $("#page-select").change(function () {
-            pageSelect = $(this).val();
-            loadPosts(0);
-        });
-
-        $(document).on("click", "#posts-body tr", function () {
-            let postId = $(this).data("id");
-            if (postId) {
-                window.location.href = "/views/posts/detail/" + postId;
-            }
-        });
-    });
-</script>
 </body>
 </html>
